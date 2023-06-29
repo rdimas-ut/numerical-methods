@@ -1,0 +1,25 @@
+#ifndef IterativeLA_Included
+#define IterativeLA_Included
+
+#include "matrix.h"
+
+enum ila_state {ILA_SUCCESS, ILA_WONT_STOP, ILA_BAD_DIAGONAL, ILA_NOT_SYMMETRIC, ILA_BAD_DATA};
+
+ila_state jacobi(const Matrix& A, const Vector& b, Vector& x,
+	     int& maxIter, double tol);
+
+ila_state gauss_seidel(const Matrix& A, const Vector& b, Vector& x,
+       int& maxIter, double tol);
+
+ila_state sor(const Matrix& A, const Vector& b, Vector& x,
+       int& maxIter, double tol, double omega);
+
+ila_state prec_conj_grad(ila_state (*prec)(const Matrix&, Vector&, double),
+       const Matrix& A, const Vector& b, Vector& x,
+       double omega, int& maxIter, double tol);
+
+ila_state jac_prec(const Matrix& A, Vector& x, double omega);
+
+ila_state ssor_prec(const Matrix& A, Vector& x, double omega);
+
+#endif
